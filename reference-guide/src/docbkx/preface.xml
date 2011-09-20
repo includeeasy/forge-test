@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE preface PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<preface>
+	<title>Introduction</title>
+	<para>
+		The goal of Project Unit is to provide a Self-growth,
+		portable and modular development advocacy,so that duplication,
+		conflict, sticky and cumbersome to be diluted or eliminated.
+		Coupled with standardized structure and process, is indeed a wonderful
+		direction. 
+   </para>
+<para>
+Can consider these two features:
+1, according to the demand search plug-in, for example, search "stub", "mock", "analyze log", "Comman data model", "aspect-oriented programming".
+2, according to the existing code structure, recommend some useful plug-in, for example:
+If the keyword "javax.persistence.persistence" appears in the code, it is recommended that my plug-in "flowas-mock" and its jpa-plugin.</para>
+	<!-- vim:et:ts=3:sw=3:tw=120 -->
+</preface>

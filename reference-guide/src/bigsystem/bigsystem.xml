@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://docbook.org/ns/docbook ../../xsd/docbook.xsd ">
+	<title>超大系统如何构建更好？</title>
+	<info>
+		<abstract>
+			<para>在这里，我们需要一个网站，网站有具体有什么功能我也不知道，但是我需要能搜索，能向它提出问题并得到解释，可以展示我的特长，可以找到我的知心朋友，可以和读者一块写小说，遇到困难可以找到相应的辅助系统，累了我还想玩游戏…
+			</para>
+			<para>首先考虑一下开发过程，我可能随时都改变随地的改变我的实现方式，可又不想破环之前的实现，这样就适合采用测试驱动开发（Test
+				Driven
+				Develop）,我可能还有一个测试人员，他干什么呢，让他写测试用例？嗨，需求一直在变，这样会累死他的，干脆让他只考虑尽可能多的应用场景，我把所有的场景都写在测试代码中，不管我怎么改代码，都会符合测试员找到的所有场景，这就变成了数据驱动测试(Data
+				Driven Test)了。其实该考虑的问题还有很多，先看看下面的图片，然后慢慢学习:</para>
+			<para>
+				<figure>
+					<title>项目关联图</title>
+
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/bigsystem/bigsystem.jpg"
+								depth="9.4cm" width="14.5cm">
+							</imagedata>
+						</imageobject>
+					</mediaobject>
+				</figure>
+			</para>
+		</abstract>
+	</info>
+	<section>
+		<title>构建系统（build）</title>
+		<para>构建系统前，我需要知道我的系统是不是已经有人开发过了，或者系统中的某些特性已经有实现，有现成的我当然要用上，maven可以把所有依赖的组件（一般是.jar文件）自动下载到项目中，那么就让maven来处理此事，有时候我需要修改别人的成品，并且自动加到我的项目中，并适当修改我的项目，此事ant最擅长了，就交给ant吧。
+		</para>
+		<table frame='all'>
+			<title>主流工具</title>
+			<tgroup cols='3' align='left' colsep='1' rowsep='1'>
+				<colspec colname='c1' />
+				<colspec colname='c2' />
+				<colspec colname='c3' />
+				<tbody>
+					<row>
+						<entry colsep="1">
+							<figure>
+								<title>ant任务</title>
+								<mediaobject>
+									<imageobject>
+										<imagedata fileref="images/bigsystem/image002.gif"
+											depth="6cm" width="3cm" />
+									</imageobject>
+								</mediaobject>
+							</figure>
+						</entry>
+						<entry namest="c2" nameend="c3" >
+							<figure>
+								<title>maven依赖关系</title>
+								<mediaobject>
+									<imageobject>
+										<imagedata fileref="images/bigsystem/image003.png"
+											depth="6cm" width="9cm" />
+									</imageobject>
+								</mediaobject>
+							</figure>
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+		<section>
+			<title>maven应用</title>
+			<para>
+				怎么去网上下载依赖和插件？
+				<figure>
+					<title>搜索maven插件：checkstyle</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/maven/mavencheckstyle.png"
+								depth="4cm" width="15cm" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+				打开上述链接找到“usage
+				page”链接并打开，现在打开的地址是“http://maven.apache.org/plugins/maven-checkstyle-plugin/”，将相应代码复制到maven的配置文件中即可：
+				<figure>
+					<title>usage page局部</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/maven/checkstyleusage.png"
+								depth="9cm" width="15cm" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+			</para>
+			<para>
+				怎么把jar包安装到本地？
+				<figure>
+					<title>搜索maven命令</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/maven/searchForInstallFile.png"
+								depth="4cm" width="15cm" />
+						</imageobject>
+					</mediaobject>
+				</figure>
+				打开链接可以看到命令格式样例代码：
+				<programlisting>
+					mvn install:install-file
+					-Dfile=path-to-commons-logging-sources.jar \
+					-DgroupId=commons-logging \
+					-DartifactId=commons-logging \
+					-Dversion=1.0.3 \
+					-Dpackaging=jar \
+					-Dclassifier=sources
+				</programlisting>
+			</para>
+			<para>怎么发布成品？</para>
+			<para>站点生成</para>
+			<para>通过原型构建</para>
+			<para>支持快速开发</para>
+		</section>
+	</section>
+	<section>
+		<title>生成代码</title>
+		<para>建一个模型，自动生成相关代码</para>
+		<para>改变模型，关联代码自动适应修改</para>
+	</section>
+	<section>
+		<title>检查代码</title>
+		<para>
+			checkstyle
+		</para>
+	</section>
+	<section>
+		<title>测试代码</title>
+		<figure>
+			<title>测试关联图</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/bigsystem/test.jpg" depth="8cm"
+						width="13cm" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			其中PowerMock和AspectJ是用来模拟不存在的环境
+			Concordion是在规格文档中写测试，测试结果也出现在规格文档中，系统是不是符合设计，一看测试结果便知。
+			Arquillian让依赖注入标识可以写在测试代码中，让测试运行于服务器中。		 
+		</para>
+		<para>
+			<figure>
+				<title>测试驱动开发过程</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/bigsystem/tddProgress.png"
+							depth="8cm" width="13cm" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			在开发大型系统时，由于部署和启动等操作非常费时，所以很多系统采用OSGI技术来提高更新代码的验证速度。
+		</para>
+	</section>
+	<section>
+		<title>团队协作</title>
+		<para>
+			在网页中浏览代码，看到哪里不正确，可以马上修改。s
+		</para>
+	</section>
+	<section>
+		<title>运行系统</title>
+		<figure>
+			<title>运行关联图</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/bigsystem/run.jpg" depth="6cm"
+						width="9cm" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+	</section>
+	<section>
+		<title>需求规格</title>
+		<para>
+			一个特性包含在一组jar包中
+			A、flowas-security.jar,flowas-shopping.jar,flowas-search.jar组成购物网站。
+			B、flowas-security.jar,flowas-novel.jar,flowas-semantic.jar组成文学网站。
+			C、中文分词，语义推理等占用内存的jar包放在不同的服务器运行。	  
+	 </para>
+	</section>
+	<section>
+		<title>持续集成</title>
+		<para>
+			每8分钟检查一次,如果有代码更新，就启动构建，若失败通知开发者，知道成功。
+	  </para>
+	</section>
+	<section>
+		<title>建议</title>
+		<para>
+			1.
+			内容不在于多也不在于多么神秘，不要追求高一些大家都不知道和不会的东西。要做到他们都需要了解一下，但是不是很深入，高级特性不知道等等。
+			2.
+			SOA
+			云计算等等，都可以纳入其中，这些东西，大家很感兴趣，但是又都不会。要抓住人们的认知方向，高一些大家闻所未闻的所谓技术，人们是没有兴趣的 。
+			3. 要讲的通俗易懂，个人建议 多一些WEB方面的技术，这些在网络招聘信息中要求很多，当然大家也都了解一些这方面的知识，也很乐于去学习。
+			4. 先把流行技术统统给介绍和特另外大家不会的知识讲述一下，从简入深，深入浅出，看一下人家出版社出的那些书是怎么编排的。
+			5.
+			技术选型，你可以自己在网络上面查找。	 
+	 </para>
+	</section>
+</chapter>

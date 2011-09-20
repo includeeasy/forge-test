@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<chapter id="faces.installation">
+	<title>Installation</title>
+	<para>
+		To use the Project Unit, you need to put the JAR on the classpath
+		of your project. Most of the features of Project Unit are enabled
+		automatically when
+		it's added to the classpath. Some
+		extra
+		configuration, covered below.
+   </para>
+
+	<section id="maven-dependencies">
+		<title>Maven dependency configuration</title>
+		<para>
+			If you are using
+			<ulink url="http://maven.apache.org/">Maven</ulink>
+			as your build tool, you can add the
+			following single dependency to
+			your pom.xml file to include Project Unit:
+		</para>
+		<programlisting role="XML"><![CDATA[<dependency>
+   <groupId>net.flowas.codegen</groupId>
+   <artifactId>project-unit</artifactId>
+   <version>${projectunit.version}</version>
+</dependency>]]></programlisting>
+		<tip>
+			<para>
+				Substitute the expression ${projectunit.version} with the most
+				recent
+				or appropriate version of Project Unit.				
+			</para>
+		</tip>
+	</section>
+	<section id="distribution-downloads">
+		<title>Distribution Downloads</title>
+		<para>
+			You can download zipped archive from
+			<ulink
+				url="https://github.com/includeeasy/projectUnit/blob/master/forge-mock/lib/ant-1.8.1.jar">github</ulink>
+			,and extract it to a directory,copy all jars in
+			'forge-1.0.0-SNAPSHOT\lib' to your project's classpath.
+		</para>
+	</section>
+	<section>
+		<title>Run the Tool</title>		
+		<para>Change directory to "bin/" and run "forge.bat" on Windows "forge.sh"
+on Linux.When execute succeed,a window like following will appear:		    
+			<figure>
+				<title>Seam forge screenshots</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="resources/images/forge.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+		</para>
+		In java project,you can run the flowing code to start the software:
+		<programlisting>
+		  public class Main
+{
+   public static void main(final String[] args)
+   {
+	  System.setProperty("jline.terminal", "jline.UnsupportedTerminal");
+      StartMain.main(args);
+   }
+
+}
+		</programlisting>
+	</section>
+</chapter>

@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+
+<chapter id="test_mock">
+	<title>Mock plugin for seam forge</title>
+
+	<para>
+		The plugin is designed to let programmers write only logic code,
+		which automatically generates code
+    </para>
+	<section>
+		<title>Scope</title>
+		<para>
+			Frameworks are used : JUnit,EasyMock,Mockito,PowerMock.
+		</para>
+		<para>
+			Witch class can be mocked : normal class,static method,singleton
+			class.
+		</para>
+		<para>
+			Furthermore, The plugin can generate code for mock
+			java.lang.Runtime,javax.persistence.Persistence,and so on.when mock
+			those class the plugin generate all code for execute command ,operate
+			database,use ftp and so on.
+		</para>
+	</section>
+	<section>
+		<title>commands</title>
+		<para>Insert mock code into test class.</para>
+		<programlisting><![CDATA[mock fromXML|editeXML --file --class]]></programlisting>
+		<variablelist>
+			<varlistentry>
+				<term>fromXML</term>
+				<listitem>
+					<para>Specify system insert mock code according to a XML file,and
+						such you must specify a XML file</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>editXML</term>
+				<listitem>
+					<para>Popup a swing window that allow you to specify which class to
+						be mocked,lastly,it generate an XML file.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>--file</term>
+				<listitem>
+					<para>Specify a XML file that list some classes to be mocked</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>--class</term>
+				<listitem>
+					<para>Full qualified class name to be mocked,generally,produce a
+						demo mock files for the class</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</section>
+	<section>
+		<title>Typical test mocking</title>
+		<section>
+			<title>java.lang.Runtime</title>
+			<para>Mock Runtime can let you run java application which invoke OS
+				commands in JVM totally,there are two files worth to note:</para>
+				<para>
+				 src/test/resources/commandAndReturn.xml,you should put the expected result of commands in the file,for example:
+				 <programlisting><![CDATA[
+				 <root>
+ <command name="java">
+    <standInfo>hello</standInfo>
+    <errorInfo></errorInfo>
+  </command>
+  <command name="notepad">
+    <standInfo>hello</standInfo>
+    <errorInfo>aha</errorInfo>
+  </command>
+</root>
+				 ]]></programlisting> 
+				</para>
+				<para>
+				 net.flowas.template.mock.runtime.CommandFilter,you can use this class to specify expected result that differs from specified in xml file,for example:
+				 <programlisting><![CDATA[ 
+				 final CommandFilter filter=new CommandFilter(){
+			@Override
+			public String[] exec(String command) {
+				if(command.equals("ifconfig")){
+					return new String[]{"stand out","error out"};
+				}
+				return null;
+			}};
+		PowerMockito.mockStatic(Runtime.class);
+		Runtime mockedRuntime = PowerMockito.mock(Runtime.class);
+		PowerMockito.when(Runtime.getRuntime()).thenReturn(mockedRuntime);
+		Answer<Process> answer = new Answer<Process>() {
+			@Override
+			public Process answer(InvocationOnMock invocation) throws Throwable {
+				return new ProcessMock((String) invocation.getArguments()[0],filter);
+			}
+		};
+		PowerMockito.when(mockedRuntime.exec(Mockito.anyString())).thenAnswer(
+				answer);
+		 ]]></programlisting> 
+		 note that the method exec(String command) returns a pair of string,the first is "stand information" and the second is "error information",if command executes successfully then error information should be empty string that is "".	 
+				</para>
+		</section>
+		<section>
+			<title>javax.persistence.Persistence</title>
+			<para>Mock Persistence can let you embedded database in JUnit,there is a file worth to note:</para>
+			<para>src/test/resources/data.xml,the file is equivalent to database,you should put data that used in test here,for example:
+				 <programlisting><![CDATA[
+				 <ns2:root xsi:schemaLocation="" xmlns:ns2="http://flowas.com/publicData" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <classList>
+        <class>net.flowas.template.mock.persistence.User</class>
+    </classList>
+    <data xsi:type="user">
+        <loginName>aha</loginName>
+    </data>
+</ns2:root>
+				 ]]></programlisting>
+				 </para>
+				 <para>In your test class you just need add the following to the method's body which is annotated with @Before
+				 <programlisting>
+				  Method method = PowerMock.method(Persistence.class,
+		 "createEntityManagerFactory", String.class);
+		 Method expectedMethod = PowerMock.method(DataInitializer.class,
+		 "createEntityManagerFactory", String.class);
+		 PowerMock.replace(method).with(expectedMethod);
+		 PowerMock.replayAll();
+		 InputStream in = this.getClass().getResourceAsStream("/data.xml");
+		 DataInitializer.insert(in);
+				 </programlisting>
+				 </para>
+		</section>
+		<section>
+			<title>log analyzer</title>
+			<para>
+				It can help maintenance personnel locate problem, in our
+				company,
+				state transition analysis is useful, many projects have used
+				the
+				state machine (DRBD, Watchdog, Eucalyptus). In automated testing,
+				sometimes the desired results can not be captured from running
+				process,
+				read the log by eye is a fool way, but have difficulty
+				analyzing
+				the logs, the tools to make a fool of log analysis.
+				This
+				tool uses named entity recognition(NER), and combinations of the
+				named entities identified to determine the piece of information.
+				If
+				someone comply with norms when printing log information, then all
+				the logs are machine-understandable.
+		   </para>
+		</section>
+	</section>
+	<section>
+	 <title>Mock common classes</title>
+	 <para>Singleton,Static private</para>
+	</section>
+	<section>
+		<title>Demonstrate</title>
+		<example>
+			<title>Insert code to an exist test class</title>
+			<para>We mock java.io.File,java.lang.Runtime and
+				javax.persistence.Persistence(That is mock an database),suppose we
+				has an xml file named "demo.xml" and it's context is the following:
+			</para>
+			<programlisting><![CDATA[<root>
+	<test-class>net.flowas.demo.MyTest</test-class>
+	<system-under-test>
+	</system-under-test>
+	<depend-on-component>	    
+		<class name="java.io.File">
+			<method>exists()</method>
+		</class>		
+		<class name="java.lang.Runtime">
+		    <method>exec(java.lang.String)</method>
+		</class>
+		<class name="javax.persistence.Persistence">
+		    <method>createEntityManagerFactory(java.lang.String)</method>
+		</class>-->
+	</depend-on-component>
+</root>]]></programlisting>
+		</example>
+		<para>
+			<figure>
+				<title>We create a project that named "mockapp"</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="resources/images/mockcommand.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<figure>
+				<title>That produces some files as following</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="resources/images/mockapp.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<figure>
+				<title>Execute "mock fromXML --file demo.xml" and now produces many
+					files</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="resources\images\console.png" />
+					</imageobject>
+				</mediaobject>
+			</figure>
+			Finally,three test class are generated:
+			<simplelist>
+				<member>net.flowas.demo.MyTest</member>
+				<member>net.flowas.template.mock.persistence.EntityMockTest
+					</member>
+				<member>net.flowas.template.mock.runtime.TestUsesRuntime</member>
+			</simplelist>
+		</para>
+	</section>
+	<section>
+		<title>Use code generation in IDE</title>
+		<para>Run launcher.Main ,and import generated project as maven
+			project
+		</para>
+		<para>Create a test class named "net.flowas.demo.MyTest",</para>
+		<para>
+			<programlisting><![CDATA[import java.io.File;
+import java.io.InputStream;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import junit.framework.Assert;
+import org.junit.Before;
+import org.junit.Test;
+public class MyTest {
+	@Before
+	public void setUp() throws Exception {			
+	}
+	@Test
+	public void hello() throws Exception {
+		File file = new File(".");
+		Assert.assertFalse(file.exists());
+		Process process = Runtime.getRuntime().exec("ant --verrsion");
+		InputStream in = process.getInputStream();
+		byte[] b = new byte[in.available()];
+		in.read(b);
+		Assert.assertEquals("1.8.1", new String(b));
+		EntityManagerFactory emf = Persistence
+				.createEntityManagerFactory("ggfortest");
+		EntityManager em = emf.createEntityManager();
+		List list = em.createQuery("select u from User as u").getResultList();
+		Assert.assertTrue(list.size()>0);
+	}
+}]]></programlisting>
+		</para>
+		<figure>
+			<title>Now you run "MyTest" as JUnit bound to fail</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="resources/images/myTestFailed.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>Execute "mock fromXML --file demo.xml" and reopen
+			"net.flowas.demo.MyTest"</para>
+		<para>
+			<programlisting><![CDATA[import java.io.File;
+import java.io.InputStream;
+import java.lang.reflect.Method;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import junit.framework.Assert;
+import net.flowas.template.mock.persistence.DataInitializer;
+import net.flowas.template.mock.runtime.CommandFilter;
+import net.flowas.template.mock.runtime.ProcessMock;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+import org.powermock.api.easymock.PowerMock;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({ File.class,Persistence.class })
+public class MyTest {
+	@Before
+	public void setUp() throws Exception {		
+		Method method = PowerMock.method(Persistence.class,
+				"createEntityManagerFactory", String.class);
+		Method expectedMethod = PowerMock.method(DataInitializer.class,
+				"createEntityManagerFactory", String.class);
+		PowerMock.replace(method).with(expectedMethod);
+		PowerMock.replayAll();
+		InputStream in = this.getClass().getResourceAsStream("/data.xml");
+		DataInitializer.insert(in);
+		PowerMockito.mockStatic(Runtime.class);
+		Runtime mockedRuntime = PowerMockito.mock(Runtime.class);
+		PowerMockito.when(Runtime.getRuntime()).thenReturn(mockedRuntime);
+		final CommandFilter commandFilter = new CommandFilter() {
+			@Override
+			public String[] exec(String command) {
+				if (command.equals("ant --verrsion")) {
+					return new String[] { "1.8.1", "" };
+				}
+				return null;
+			}
+		};
+		Answer<Process> answer = new Answer<Process>() {
+			@Override
+			public Process answer(InvocationOnMock invocation) throws Throwable {
+				return new ProcessMock((String) invocation.getArguments()[0],
+						commandFilter);
+			}
+		};
+		PowerMockito.when(mockedRuntime.exec(Mockito.anyString())).thenAnswer(
+				answer);
+		Answer<File> answerFile = new Answer<File>() {
+			@Override
+			public File answer(InvocationOnMock invocation) throws Throwable {
+				Object[] arguments = invocation.getArguments();
+				File mockFile = new File((java.lang.String) arguments[0]);
+				File spy = PowerMockito.spy(mockFile);
+				PowerMockito.when(spy.exists()).thenReturn(false);
+				return spy;
+			}
+		};
+		PowerMockito.whenNew(File.class).withArguments(Mockito.anyString())
+				.thenAnswer(answerFile);
+	}
+
+	@Test
+	public void hello() throws Exception {
+		File file = new File(".");
+		Assert.assertFalse(file.exists());
+		Process process = Runtime.getRuntime().exec("ant --verrsion");
+		InputStream in = process.getInputStream();
+		byte[] b = new byte[in.available()];
+		in.read(b);
+		Assert.assertEquals("1.8.1", new String(b));
+		EntityManagerFactory emf = Persistence
+				.createEntityManagerFactory("ggfortest");
+		EntityManager em = emf.createEntityManager();
+		List list = em.createQuery("select u from User as u").getResultList();
+		Assert.assertTrue(list.size()>0);
+	}
+}]]></programlisting>
+		</para>
+		<figure>
+			<title>Now you run "MyTest" as JUnit likely to be successful</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="resources/images/myTestSucceed.png" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+	</section>
+</chapter>

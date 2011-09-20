@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+
+<chapter id="building_block">
+	<title>Building block style development</title>
+	<para>
+		You can put some wars,jars,zips,code fragment and regular process
+		together to build a project.
+   </para>
+	<figure>
+		<title>Has logon module</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="resources\images\haslogon.png" />
+			</imageobject>
+		</mediaobject>
+	</figure>
+	<figure>
+		<title>No logon module</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="resources\images\nologon.png" />
+			</imageobject>
+		</mediaobject>
+	</figure>
+	<section>
+	 <title>Navigation and page fragments for one of site module</title>
+	 <para>We created an site utility module for manage the navigation and fragments. Thus you only need add some information to file "src/main/resources/META-INF/site/site.xml" in your maven project(if your project is a common java project,that is "META-INF/site/site.xml"),then you can use #{siteManager...} to get relative information.</para>
+	</section>
+	<section>
+	 <title>Site specification unit</title>
+	 <para>Includes site.xml,beans.xml and some Beans</para>
+	 <para>In JEE environment,Beans are wrapped by CDI container,you can use it directly in JEE or EL.For example ,#{siteManager.links} represents all 'item' elements which declared at "//links/item" in "site.xml" files. See META-INF/beans.xml in unit-site-spec.jar for details.</para>
+	 <para>In J2se environment,you need wrap those beans yourself,construct the same object as above you should do the flowing:
+	 <programlisting>
+	    SiteManager site = new SiteManager();
+		AlignHelper align = new AlignHelper();			
+		Element list = align.loadContext("//treeitem[@id='" + id + "']");
+		site.setLinksElement(list);
+	 </programlisting>
+	 there 'site' equals '#{siteManager}'.</para>
+	</section>	
+	<section>
+	 <title>Gwt unit</title>
+	 <para>Includes gwt client that only generates static files and unit-gwt that java classes run in server.</para>
+	</section>
+	<section>
+	 <title>Security unit</title>
+	 <para>Logon modules</para>
+	</section>
+	<section>
+	 <title>Novel unit</title>
+	 <para>Write fictions and publish materials</para>
+	</section>
+	<section>
+	 <title>Annotate unit</title>
+	 <para>Use artificial intelligent technology to annotate text in somewhere of a web site</para>
+	</section>
+	<section>
+		<title>Other ideas</title>
+		<para>Consider to use CDI+EL,Metawidget,Multimodal Architecture and
+		Interfaces,XProc,After-Processing Pattern,s-ramp</para>
+		<para>Protege's plugin.xml</para>
+		<para>OpenSocial's Gadget</para>
+		<para>Maven site descriptor</para>
+		<para>Seam xml config</para>
+		<para>OpenXava</para>
+		<para>Huawei's Metaweb</para>
+		<para>NetBeans API's layer.xml </para>
+	</section>
+</chapter>

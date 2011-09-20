@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+
+<chapter id="forge-unit">
+	<title>Project Builder plugin for seam forge</title>
+	<para>
+		Manage project's archive and some configuration
+    </para>	
+	<section>
+		<title>commands</title>
+		<para>Create and maintain project</para>
+		<programlisting><![CDATA[mock fromXML|editeXML --file]]></programlisting>
+		<variablelist>
+			<varlistentry>
+				<term>fromXML</term>
+				<listitem>
+					<para>Construct project according to a XML file,and
+						such you must specify a XML file</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>editXML</term>
+				<listitem>
+					<para>Popup a swing window that allow you to configure project's futures,it generate an XML file.</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>--file</term>
+				<listitem>
+					<para>Specify a XML file that specified some futures for project.</para>
+				</listitem>
+			</varlistentry>			
+		</variablelist>
+	</section>
+	<section>
+	 <title>Configure your project system via web interface</title>
+	 <para>Generate xml first and then construct project</para>
+	</section>
+	<section>
+	 <title>projectuni's maven plugin</title>
+	 <para>
+	 The following configures a web site to include "Simulation System","Virtual Reality" and "Predicate editor" futures/modules:
+	  <programlisting><![CDATA[<plugin>
+				<groupId>net.flowas.maven.plugins</groupId>
+				<artifactId>project-unit-plugin</artifactId>
+				<version>1.0</version>
+				<configuration>					
+					<unitPlugins>						
+						<plugin>
+							<groupId>net.flowas.maven.plugins</groupId>
+							<artifactId>netlogodemo</artifactId>
+							<version>1.0</version>
+							<configuration>
+								<link locateAt="home" href="/netlog/">Simulation System</link>								
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>net.flowas.maven.plugins</groupId>
+							<artifactId>x3domdemo</artifactId>
+							<version>1.0</version>
+							<configuration>
+								<link locateAt="home" href="/x3dom/">Virtual Reality</link>								
+							</configuration>
+						</plugin>
+						<plugin>
+							<groupId>net.flowas.maven.plugins</groupId>
+							<artifactId>preditordemo</artifactId>
+							<version>1.0</version>
+							<configuration>
+								<link locateAt="home" href="/preditor/">Predicate editor</link>								
+							</configuration>
+						</plugin>
+					</unitPlugins>
+				</configuration>
+			</plugin>]]></programlisting>
+			Those future enables web site can show the following effects:
+			<figure>
+		<title>Netlogo's WaveMachine</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="resources/images/notlogo.png" />
+			</imageobject>
+		</mediaobject>
+	</figure>
+	<figure>
+		<title>X3DOM version of the AnthroGloss model</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="resources/images/x3dom.png" />
+			</imageobject>
+		</mediaobject>
+	</figure>
+	<figure>
+		<title>Screenshot of the AceWiki authoring tool</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="resources/images/authoringtool.png" />
+			</imageobject>
+		</mediaobject>
+	</figure>
+	 </para>
+	</section>
+</chapter>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE bookinfo PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+
+<bookinfo>
+	<title>Project Unit Resources and Development Model</title>
+	<subtitle>Reference Guide</subtitle>
+	<releaseinfo>1.0.0-SNAPSHOT</releaseinfo>
+	<authorgroup>
+		<author>
+			<firstname>Liu</firstname>
+			<surname>Jianhong</surname>
+			<email>flowas@gmail.com</email>
+			<address>LingYi Square, Xi'an Software Park, No.72 Keji 2nd Rd
+Xi'an 710075 
+China</address>
+		</author>
+	</authorgroup>
+</bookinfo>
