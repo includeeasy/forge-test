@@ -2,10 +2,13 @@ package net.flowas.mock.jdbc;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import org.powermock.api.mockito.PowerMockito;
 
 public class DatabaseIntializer {
 
@@ -52,5 +55,9 @@ public class DatabaseIntializer {
 			Connection conn = DriverManager.getConnection("jdbc:h2:db/test",
 					"sa", "");
 			return conn;
+	}
+	public static void mockConnection() throws SecurityException, NoSuchMethodException, ClassNotFoundException, SQLException{
+		Method getConnection = DriverManager.class.getMethod("getConnection", String.class, String.class, String.class);		
+		PowerMockito.stub(getConnection).toReturn(getConnection());
 	}
 }
