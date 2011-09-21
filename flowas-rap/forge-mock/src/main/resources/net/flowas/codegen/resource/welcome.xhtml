@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+
+    Copyright (C) 2010 http://flowas.net/
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+    You can write to flowas@gmial.com for more customer requirement.
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+<body>
+<ui:composition template="./WEB-INF/template/welcome.xhtml">
+	<ui:define name="top">
+                top
+            </ui:define>
+	<ui:define name="left">
+		<p:menu>
+			<p:submenu label="Mail">
+				<p:menuitem value="Gmail" url="http://www.google.com" />
+				<p:menuitem value="Hotmail" url="http://www.hotmail.com" />
+				<p:menuitem value="Yahoo Mail" url="http://mail.yahoo.com" />
+			</p:submenu>
+			<p:submenu label="Videos">
+				<p:menuitem value="Youtube" url="http://www.youtube.com" />
+				<p:menuitem value="Break" url="http://www.break.com" />
+				<p:menuitem value="Metacafe" url="http://www.metacafe.com" />
+			</p:submenu>
+			<p:submenu  name="techMenu"  label="技术演示">
+				<p:menuitem value="Facebook" url="http://www.facebook.com" />
+				<p:menuitem value="MySpace" url="http://www.myspace.com" />
+			</p:submenu>
+		</p:menu>
+	</ui:define>
+	<ui:define name="content">
+		<!--[if !IE]> -->
+		<object type="application/x-shockwave-flash"
+			data="#{request.contextPath}/resources/swf/pageflip.swf" width="700"
+			height="450"> <!-- <![endif]--> <!--[if IE]>
+<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+  codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
+  width="300" height="135">
+  <param name="movie" value="movie.swf" />
+<!--><!--dgx-->
+			<param name="loop" value="true" />
+			<param name="menu" value="false" />
+
+			<p>This is <b>alternative</b> content.</p>
+		</object>
+		<!-- <![endif]-->
+	</ui:define>
+
+	<ui:define name="bottom">
+                bottom
+            </ui:define>
+
+</ui:composition>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+org.jboss.arquillian.impl.event.FiredEventException: java.lang.RuntimeException: Could not get Deployment
+	at org.jboss.arquillian.impl.event.MapEventManager.fire(MapEventManager.java:68)
+	at org.jboss.arquillian.impl.context.AbstractEventContext.fire(AbstractEventContext.java:115)
+	at org.jboss.arquillian.impl.EventTestRunnerAdaptor.beforeClass(EventTestRunnerAdaptor.java:96)
+	at org.jboss.arquillian.junit.Arquillian$2.evaluate(Arquillian.java:162)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.jboss.arquillian.junit.Arquillian$3$1.evaluate(Arquillian.java:186)
+	at org.jboss.arquillian.junit.Arquillian$MultiStatementExecutor.execute(Arquillian.java:297)
+	at org.jboss.arquillian.junit.Arquillian$3.evaluate(Arquillian.java:182)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+	at org.jboss.arquillian.junit.Arquillian.run(Arquillian.java:127)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+Caused by: java.lang.RuntimeException: Could not get Deployment
+	at org.jboss.arquillian.impl.DeploymentAnnotationArchiveGenerator.generateApplicationArchive(DeploymentAnnotationArchiveGenerator.java:88)
+	at org.jboss.arquillian.impl.ClientDeploymentGenerator.generate(ClientDeploymentGenerator.java:59)
+	at org.jboss.arquillian.impl.handler.ArchiveGenerator.callback(ArchiveGenerator.java:52)
+	at org.jboss.arquillian.impl.handler.ArchiveGenerator.callback(ArchiveGenerator.java:42)
+	at org.jboss.arquillian.impl.event.MapEventManager.fire(MapEventManager.java:63)
+	... 15 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.jboss.arquillian.impl.DeploymentAnnotationArchiveGenerator.generateApplicationArchive(DeploymentAnnotationArchiveGenerator.java:57)
+	... 19 more
+Caused by: java.lang.RuntimeException: Could not load found class .org.eclipse.jdt.internal.junit.BasicElementLabels
+	at org.jboss.shrinkwrap.impl.base.container.ContainerBase$2.classFound(ContainerBase.java:990)
+	at org.jboss.shrinkwrap.impl.base.URLPackageScanner.foundClass(URLPackageScanner.java:204)
+	at org.jboss.shrinkwrap.impl.base.URLPackageScanner.handle(URLPackageScanner.java:193)
+	at org.jboss.shrinkwrap.impl.base.URLPackageScanner.handle(URLPackageScanner.java:197)
+	at org.jboss.shrinkwrap.impl.base.URLPackageScanner.handle(URLPackageScanner.java:197)
+	at org.jboss.shrinkwrap.impl.base.URLPackageScanner.handle(URLPackageScanner.java:197)
+	at org.jboss.shrinkwrap.impl.base.URLPackageScanner.handle(URLPackageScanner.java:197)
+	at org.jboss.shrinkwrap.impl.base.URLPackageScanner.handle(URLPackageScanner.java:197)
+	at org.jboss.shrinkwrap.impl.base.URLPackageScanner.handle(URLPackageScanner.java:177)
+	at org.jboss.shrinkwrap.impl.base.URLPackageScanner.scanPackage(URLPackageScanner.java:132)
+	at org.jboss.shrinkwrap.impl.base.container.ContainerBase.addPackages(ContainerBase.java:1003)
+	at org.jboss.shrinkwrap.impl.base.container.ContainerBase.addPackages(ContainerBase.java:957)
+	at net.flowas.ExamplePluginTest.getDeployment(ExamplePluginTest.java:27)
+	... 24 more
+Caused by: java.lang.ClassNotFoundException: .org.eclipse.jdt.internal.junit.BasicElementLabels
+	at java.net.URLClassLoader$1.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.net.URLClassLoader.findClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at org.jboss.shrinkwrap.impl.base.container.ContainerBase$2.classFound(ContainerBase.java:986)
+	... 36 more
+
+org.jboss.arquillian.impl.event.FiredEventException: java.lang.IllegalStateException: No org.jboss.shrinkwrap.api.Archive found in context
+	at org.jboss.arquillian.impl.event.MapEventManager.fire(MapEventManager.java:68)
+	at org.jboss.arquillian.impl.context.AbstractEventContext.fire(AbstractEventContext.java:115)
+	at org.jboss.arquillian.impl.EventTestRunnerAdaptor.afterClass(EventTestRunnerAdaptor.java:108)
+	at org.jboss.arquillian.junit.Arquillian$3$2.evaluate(Arquillian.java:190)
+	at org.jboss.arquillian.junit.Arquillian$MultiStatementExecutor.execute(Arquillian.java:297)
+	at org.jboss.arquillian.junit.Arquillian$3.evaluate(Arquillian.java:182)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+	at org.jboss.arquillian.junit.Arquillian.run(Arquillian.java:127)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+Caused by: java.lang.IllegalStateException: No org.jboss.shrinkwrap.api.Archive found in context
+	at org.jboss.arquillian.impl.Validate.stateNotNull(Validate.java:75)
+	at org.jboss.arquillian.impl.handler.ContainerUndeployer.callback(ContainerUndeployer.java:58)
+	at org.jboss.arquillian.impl.handler.ContainerUndeployer.callback(ContainerUndeployer.java:47)
+	at org.jboss.arquillian.impl.event.MapEventManager.fire(MapEventManager.java:63)
+	... 13 more
+
